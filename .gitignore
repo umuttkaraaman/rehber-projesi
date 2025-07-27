@@ -1,9 +1,26 @@
-*.pyc
-__pycache__/
-db.sqlite3
-.env
+# Sanal ortam
 .venv/
-*.log
-*.sqlite3
-*.DS_Store
+env/
+venv/
+
+# PyCharm dosyaları
 .idea/
+
+# Derlenmiş Python dosyaları
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Django DB dosyası (kendi projende varsa)
+db.sqlite3
+
+# VS Code ayarları (VS Code kullanıyorsan)
+.vscode/
+
+# Ortam değişkenleri
+.env
+
+# macOS dosyaları
+.DS_Store
+
