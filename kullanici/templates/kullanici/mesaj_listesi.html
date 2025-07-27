@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+<h4 class="mb-4 text-center">💬 Mesajlarım</h4>
+
+<!-- Yeni Mesaj Başlatma -->
+<div class="card p-3 mb-4 shadow-sm">
+  <h5>📨 Yeni Sohbet Başlat</h5>
+  <form method="post">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-md-4">
+        {{ form.alici|add_class:"form-control" }}
+      </div>
+      <div class="col-md-6">
+        {{ form.mesaj|add_class:"form-control" }}
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-primary w-100" type="submit">Gönder</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Daha önce konuşulan kişiler -->
+{% if kisiler %}
+<ul class="list-group">
+  {% for kisi in kisiler %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      {{ kisi.username }}
+      <a href="{% url 'mesajlasma' kisi.id %}" class="btn btn-sm btn-outline-primary">Sohbete Git</a>
+    </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="text-center text-muted">Henüz kimseyle mesajlaşmadın.</p>
+{% endif %}
+{% endblock %}

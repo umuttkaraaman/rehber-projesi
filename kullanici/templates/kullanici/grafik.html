@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Kayıt Grafiği{% endblock %}
+{% block content %}
+
+<div class="container mt-4">
+  <h3 class="text-center mb-4">📊 Tarihe Göre Kayıt Sayısı</h3>
+  <canvas id="kayıtChart" width="600" height="300"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById('kayıtChart').getContext('2d');
+  const chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: {{ labels|safe }},
+      datasets: [{
+        label: 'Kayıt Sayısı',
+        data: {{ values|safe }},
+        borderWidth: 2,
+        fill: true,
+        tension: 0.3,
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        pointBackgroundColor: 'rgba(54, 162, 235, 1)'
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        tooltip: {
+          enabled: true
+        },
+        legend: {
+          display: true
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 1
+          }
+        }
+      }
+    }
+  });
+</script>
+
+{% endblock %}

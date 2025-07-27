@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Bilgi Girişi{% endblock %}
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-info text-white text-center">
+                <h4>Bilgilerini Ekle</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="d-grid mt-3">
+                        <button type="submit" class="btn btn-info">Kaydet</button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-center">
+                <a href="{% url 'profil' %}" class="btn btn-secondary btn-sm">Profil Sayfasına Git</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

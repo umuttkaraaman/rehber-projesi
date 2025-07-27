@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}Mesajlaşma{% endblock %}
+
+{% block content %}
+
+<h3 class="text-center mb-4">💬 {{ alici.username }} ile Mesajlaşma</h3>
+
+<div class="card shadow-sm mb-4">
+  <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+    <div class="chat-box">
+      {% for mesaj in mesajlar %}
+        <div class="mb-2 {% if mesaj.gonderen == request.user %}text-end{% else %}text-start{% endif %}">
+          <div class="d-inline-block p-2 rounded {% if mesaj.gonderen == request.user %}bg-primary text-white{% else %}bg-light text-dark{% endif %}">
+            <div>{{ mesaj.mesaj }}</div>
+            <small class="d-block mt-1 text-muted" style="font-size: 0.75rem;">{{ mesaj.tarih|date:"d.m.Y H:i" }}</small>
+          </div>
+        </div>
+      {% empty %}
+        <p class="text-center text-muted">Henüz mesaj yok.</p>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<form method="post">
+  {% csrf_token %}
+  <div class="mb-3">
+    {{ form.mesaj|add_class:"form-control" }}
+  </div>
+  <button type="submit" class="btn btn-primary w-100">Gönder</button>
+</form>
+
+{% endblock %}

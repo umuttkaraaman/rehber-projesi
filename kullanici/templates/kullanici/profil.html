@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %}Profilim{% endblock %}
+{% block content %}
+
+<div class="card mb-4 shadow-sm">
+    <div class="card-body text-center">
+        <img src="https://ui-avatars.com/api/?name={{ request.user.username }}&background=random&size=100" class="rounded-circle mb-3" alt="Avatar">
+        <h5 class="card-title">Hoş geldin, {{ request.user.first_name|default:request.user.username }} 👋</h5>
+    </div>
+</div>
+
+
+<h3 class="mb-4 text-center">Kayıtlı Bilgiler</h3>
+
+<form method="get" class="row g-2 mb-4">
+    <div class="col-md-3">
+        <input type="text" name="q" class="form-control" placeholder="Ad, Soyad veya Telefon" value="{{ query }}">
+    </div>
+    <div class="col-md-2">
+        <input type="date" name="start" class="form-control" value="{{ start }}">
+    </div>
+    <div class="col-md-2">
+        <input type="date" name="end" class="form-control" value="{{ end }}">
+    </div>
+    <div class="col-md-3">
+        <select name="kategori" class="form-select">
+            <option value="">Tüm Kategoriler</option>
+            <option value="Aile" {% if kategori == 'Aile' %}selected{% endif %}>Aile</option>
+            <option value="İş" {% if kategori == 'İş' %}selected{% endif %}>İş</option>
+            <option value="Acil" {% if kategori == 'Acil' %}selected{% endif %}>Acil</option>
+            <option value="Diğer" {% if kategori == 'Diğer' %}selected{% endif %}>Diğer</option>
+        </select>
+    </div>
+    <div class="col-md-2 d-grid">
+        <button type="submit" class="btn btn-primary">Filtrele</button>
+    </div>
+</form>
+
+{% if bilgiler %}
+<table class="table table-bordered table-striped align-middle shadow-sm">
+    <thead class="table-dark">
+        <tr>
+            <th>Ad</th>
+            <th>Soyad</th>
+            <th>Telefon</th>
+            <th>Tarih</th>
+            <th>Kategori</th>
+            {% if request.user.is_staff %}
+            <th>Kayıt Sahibi</th>
+            {% endif %}
+            <th style="width: 150px;">İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for bilgi in bilgiler %}
+        <tr>
+            <td>{{ bilgi.ad }}</td>
+            <td>{{ bilgi.soyad }}</td>
+            <td>{{ bilgi.telefon }}</td>
+            <td>{{ bilgi.tarih }}</td>
+            <td>{{ bilgi.kategori }}</td>
+            {% if request.user.is_staff %}
+            <td><strong>{{ bilgi.user.username }}</strong></td>
+            {% endif %}
+            <td>
+                <a href="{% url 'bilgi_guncelle' bilgi.id %}" class="btn btn-sm btn-warning">Güncelle</a>
+                <a href="{% url 'bilgi_sil' bilgi.id %}" class="btn btn-sm btn-danger">Sil</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="alert alert-info text-center">
+    Henüz kayıtlı bilginiz bulunmamaktadır.
+</div>
+{% endif %}
+
+<!-- Sayfalama -->
+{% if bilgiler.has_other_pages %}
+<nav>
+  <ul class="pagination justify-content-center">
+    {% if bilgiler.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ bilgiler.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if start %}&start={{ start }}{% endif %}{% if end %}&end={{ end }}{% endif %}{% if kategori %}&kategori={{ kategori }}{% endif %}">Önceki</a>
+      </li>
+    {% endif %}
+
+    <li class="page-item active">
+      <span class="page-link">
+        Sayfa {{ bilgiler.number }} / {{ bilgiler.paginator.num_pages }}
+      </span>
+    </li>
+
+    {% if bilgiler.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ bilgiler.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if start %}&start={{ start }}{% endif %}{% if end %}&end={{ end }}{% endif %}{% if kategori %}&kategori={{ kategori }}{% endif %}">Sonraki</a>
+      </li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Mesaj Gönder{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3 class="text-center mb-4">📤 Yeni Mesaj Gönder</h3>
+    <div class="card shadow-sm p-4 mx-auto" style="max-width: 600px;">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ form.alici.label_tag }}
+                {{ form.alici }}
+            </div>
+            <div class="mb-3">
+                {{ form.mesaj.label_tag }}
+                {{ form.mesaj }}
+            </div>
+            <button type="submit" class="btn btn-success w-100">Gönder</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

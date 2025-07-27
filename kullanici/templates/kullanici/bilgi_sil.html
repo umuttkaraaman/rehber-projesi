@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Kayıt Sil{% endblock %}
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card border-danger shadow-sm">
+            <div class="card-header bg-danger text-white text-center">
+                <h4>Silme Onayı</h4>
+            </div>
+            <div class="card-body text-center">
+                <p class="fs-5">“<strong>{{ bilgi.ad }} {{ bilgi.soyad }}</strong>” adlı kaydı silmek istediğinize emin misiniz?</p>
+                <form method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Evet, Sil</button>
+                </form>
+                <a href="{% url 'profil' %}" class="btn btn-secondary">Vazgeç</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

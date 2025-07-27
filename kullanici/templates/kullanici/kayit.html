@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Kayıt Ol{% endblock %}
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-success text-white text-center">
+                <h4>Yeni Hesap Oluştur</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="d-grid mt-3">
+                        <button type="submit" class="btn btn-success">Kayıt Ol</button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-center">
+                <p>Zaten hesabın var mı? <a href="{% url 'giris' %}">Giriş Yap</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

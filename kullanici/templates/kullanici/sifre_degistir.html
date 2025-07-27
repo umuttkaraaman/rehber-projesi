@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Şifre Değiştir{% endblock %}
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-warning text-dark text-center">
+                <h4>Şifre Değiştir</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="d-grid mt-3">
+                        <button type="submit" class="btn btn-warning">Şifreyi Güncelle</button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-center">
+                <a href="{% url 'profil' %}" class="btn btn-outline-secondary btn-sm">Profil Sayfasına Dön</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
